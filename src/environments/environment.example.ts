@@ -5,3 +5,6 @@ export const environment = {
   jobApiKey: 'YOUR_API_KEY',
   jobApiId: 'YOUR_APP_ID'
 };
+
+
+// your model for runing 

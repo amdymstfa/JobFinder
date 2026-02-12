@@ -1,0 +1,94 @@
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary-50 to-blue-50">
+  <div class="max-w-md w-full space-y-8">
+    <!-- Header -->
+    <div class="text-center">
+      <h2 class="text-4xl font-extrabold text-gray-900 mb-2">
+        Welcome Back
+      </h2>
+      <p class="text-gray-600">Sign in to your account</p>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert-error flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+        </svg>
+        {{ errorMessage }}
+      </div>
+      <button (click)="errorMessage = ''" class="text-red-600 hover:text-red-800">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="mt-8 space-y-6 card">
+      <!-- Email -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+          Email <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          placeholder="Enter your email"
+          [class]="f['email'].touched && f['email'].invalid ? 'input-field input-error' : 'input-field'"
+        />
+        <p *ngIf="f['email'].touched && f['email'].errors" class="mt-1 text-sm text-red-600">
+          <span *ngIf="f['email'].errors['required']">Email is required</span>
+          <span *ngIf="f['email'].errors['email']">Invalid email format</span>
+        </p>
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+          Password <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          placeholder="Enter your password"
+          [class]="f['password'].touched && f['password'].invalid ? 'input-field input-error' : 'input-field'"
+        />
+        <p *ngIf="f['password'].touched && f['password'].errors" class="mt-1 text-sm text-red-600">
+          <span *ngIf="f['password'].errors['required']">Password is required</span>
+        </p>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="w-full btn-primary flex items-center justify-center gap-2"
+        [disabled]="isLoading"
+      >
+        <svg *ngIf="isLoading" class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>{{ isLoading ? 'Signing in...' : 'Sign In' }}</span>
+      </button>
+
+      <!-- Register Link -->
+      <p class="text-center text-sm text-gray-600">
+        Don't have an account?
+        <a routerLink="/auth/register" class="font-medium text-primary-600 hover:text-primary-500 transition">
+          Register here
+        </a>
+      </p>
+    </form>
+
+    <!-- Demo Credentials -->
+    <div class="bg-gray-100 border border-gray-300 rounded-lg p-4">
+      <p class="text-sm font-medium text-gray-700 mb-2">Demo Account:</p>
+      <div class="space-y-1 text-sm text-gray-600">
+        <p>Email: <code class="bg-white px-2 py-1 rounded">admin&#64jobfinder.com</code></p>
+        <p>Password: <code class="bg-white px-2 py-1 rounded">Admin123!</code></p>
+      </div>
+    </div>
+  </div>
+</div>

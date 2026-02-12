@@ -1,0 +1,90 @@
+<nav class="bg-white shadow-lg sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      <!-- Logo & Brand -->
+      <div class="flex items-center">
+        <a routerLink="/jobs" class="flex items-center">
+          <svg class="w-8 h-8 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+            <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
+          </svg>
+          <span class="ml-2 text-2xl font-bold text-gradient">JobFinder</span>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-4">
+        <a routerLink="/jobs" routerLinkActive="text-primary-600" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100 transition">
+          Jobs
+        </a>
+
+        <ng-container *ngIf="isAuthenticated">
+          <a routerLink="/favorites" routerLinkActive="text-primary-600" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100 transition">
+            Favorites
+          </a>
+          <a routerLink="/applications" routerLinkActive="text-primary-600" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100 transition">
+            Applications
+          </a>
+          <a routerLink="/profile" routerLinkActive="text-primary-600" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100 transition">
+            Profile
+          </a>
+          <button (click)="logout()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+            Logout
+          </button>
+        </ng-container>
+
+        <ng-container *ngIf="!isAuthenticated">
+          <a routerLink="/auth/login" class="px-4 py-2 text-primary-600 font-medium hover:text-primary-700 transition">
+            Login
+          </a>
+          <a routerLink="/auth/register" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition">
+            Register
+          </a>
+        </ng-container>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden flex items-center">
+        <button (click)="toggleMobileMenu()" class="text-gray-700 hover:text-primary-600 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path *ngIf="!isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            <path *ngIf="isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div *ngIf="isMobileMenuOpen" class="md:hidden bg-white border-t border-gray-200">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      <a routerLink="/jobs" (click)="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100">
+        Jobs
+      </a>
+
+      <ng-container *ngIf="isAuthenticated">
+        <a routerLink="/favorites" (click)="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100">
+          Favorites
+        </a>
+        <a routerLink="/applications" (click)="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100">
+          Applications
+        </a>
+        <a routerLink="/profile" (click)="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100">
+          Profile
+        </a>
+        <button (click)="logout()" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-50">
+          Logout
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="!isAuthenticated">
+        <a routerLink="/auth/login" (click)="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-primary-600 hover:bg-gray-100">
+          Login
+        </a>
+        <a routerLink="/auth/register" (click)="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium bg-primary-600 text-white hover:bg-primary-700">
+          Register
+        </a>
+      </ng-container>
+    </div>
+  </div>
+</nav>

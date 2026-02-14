@@ -7,11 +7,12 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import * as FavoritesActions from '../../store/favorites.actions';
 import * as FavoritesSelectors from '../../store/favorites.selectors';
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-favorites-list',
   standalone: true,
-  imports: [CommonModule, LoaderComponent],
+  imports: [CommonModule, LoaderComponent, RouterLink],
   templateUrl: './favorites-list.component.html',
   styleUrl: './favorites-list.component.css'
 })

@@ -1,148 +1,115 @@
 <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary-50 to-blue-50">
-  <div class="max-w-md w-full space-y-8">
-    <!-- Header -->
+  <div class="max-w-2xl w-full space-y-6">
+
     <div class="text-center">
-      <h2 class="text-4xl font-extrabold text-gray-900 mb-2">
+      <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">
         Create Account
       </h2>
-      <p class="text-gray-600">Join JobFinder today</p>
+      <p class="mt-2 text-gray-600">Join JobFinder today</p>
     </div>
 
-    <!-- Success Message -->
-    <div *ngIf="successMessage" class="alert-success flex items-center gap-2">
-      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+    <div *ngIf="successMessage" class="animate-fadeIn bg-green-50 border-l-4 border-green-500 p-4 rounded-md flex items-center gap-3 shadow-sm">
+      <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
       </svg>
-      {{ successMessage }}
+      <span class="text-sm text-green-800 font-medium">{{ successMessage }}</span>
     </div>
 
-    <!-- Error Message -->
-    <div *ngIf="errorMessage" class="alert-error flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+    <div *ngIf="errorMessage" class="animate-shake bg-red-50 border-l-4 border-red-500 p-4 rounded-md flex items-center justify-between shadow-sm">
+      <div class="flex items-center gap-3">
+        <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
         </svg>
-        {{ errorMessage }}
+        <span class="text-sm text-red-700 font-medium">{{ errorMessage }}</span>
       </div>
-      <button (click)="errorMessage = ''" class="text-red-600 hover:text-red-800">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-        </svg>
+      <button (click)="errorMessage = ''" class="text-red-400 hover:text-red-600 transition">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"/></svg>
       </button>
     </div>
 
-    <!-- Form -->
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="mt-8 space-y-6 card">
-      <!-- First Name -->
-      <div>
-        <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">
-          First Name <span class="text-red-500">*</span>
-        </label>
-        <input
-          type="text"
-          id="firstName"
-          formControlName="firstName"
-          placeholder="Enter your first name"
-          [class]="f['firstName'].touched && f['firstName'].invalid ? 'input-field input-error' : 'input-field'"
-        />
-        <p *ngIf="f['firstName'].touched && f['firstName'].errors" class="mt-1 text-sm text-red-600">
-          <span *ngIf="f['firstName'].errors['required']">First name is required</span>
-          <span *ngIf="f['firstName'].errors['minlength']">Minimum 2 characters required</span>
+    <div class="bg-white py-8 px-6 sm:px-10 shadow-xl rounded-2xl border border-gray-100 card">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-5">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label for="firstName" class="block text-sm font-semibold text-gray-700 mb-1">First Name <span class="text-red-500">*</span></label>
+            <input type="text" id="firstName" formControlName="firstName" placeholder="John"
+                   [class]="f['firstName'].touched && f['firstName'].invalid ? 'input-field input-error' : 'input-field'"/>
+            <div class="h-5">
+              <p *ngIf="f['firstName'].touched && f['firstName'].errors" class="text-xs text-red-600 mt-1 animate-fadeIn">
+                <span *ngIf="f['firstName'].errors['required']">Required</span>
+                <span *ngIf="f['firstName'].errors['minlength']">Min 2 characters</span>
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <label for="lastName" class="block text-sm font-semibold text-gray-700 mb-1">Last Name <span class="text-red-500">*</span></label>
+            <input type="text" id="lastName" formControlName="lastName" placeholder="Doe"
+                   [class]="f['lastName'].touched && f['lastName'].invalid ? 'input-field input-error' : 'input-field'"/>
+            <div class="h-5">
+              <p *ngIf="f['lastName'].touched && f['lastName'].errors" class="text-xs text-red-600 mt-1 animate-fadeIn">
+                <span *ngIf="f['lastName'].errors['required']">Required</span>
+                <span *ngIf="f['lastName'].errors['minlength']">Min 2 characters</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-semibold text-gray-700 mb-1">Email <span class="text-red-500">*</span></label>
+          <input type="email" id="email" formControlName="email" placeholder="john@example.com"
+                 [class]="f['email'].touched && f['email'].invalid ? 'input-field input-error' : 'input-field'"/>
+          <div class="h-5">
+            <p *ngIf="f['email'].touched && f['email'].errors" class="text-xs text-red-600 mt-1 animate-fadeIn">
+              <span *ngIf="f['email'].errors['required']">Email is required</span>
+              <span *ngIf="f['email'].errors['email']">Invalid format</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label for="password" class="block text-sm font-semibold text-gray-700 mb-1">Password <span class="text-red-500">*</span></label>
+            <input type="password" id="password" formControlName="password" placeholder="••••••••"
+                   [class]="f['password'].touched && f['password'].invalid ? 'input-field input-error' : 'input-field'"/>
+            <div class="h-5">
+              <p *ngIf="f['password'].touched && f['password'].errors" class="text-xs text-red-600 mt-1 animate-fadeIn">
+                <span *ngIf="f['password'].errors['required']">Required</span>
+                <span *ngIf="f['password'].errors['minlength']">Min 6 characters</span>
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <label for="confirmPassword" class="block text-sm font-semibold text-gray-700 mb-1">Confirm Password <span class="text-red-500">*</span></label>
+            <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="••••••••"
+                   [class]="f['confirmPassword'].touched && f['confirmPassword'].errors ? 'input-field input-error' : 'input-field'"/>
+            <div class="h-5">
+              <p *ngIf="f['confirmPassword'].touched && f['confirmPassword'].errors" class="text-xs text-red-600 mt-1 animate-fadeIn">
+                <span *ngIf="f['confirmPassword'].errors['required']">Please confirm</span>
+                <span *ngIf="f['confirmPassword'].errors['passwordMismatch']">Passwords match error</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="isLoading"
+                class="w-full py-3 px-4 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-bold shadow-lg shadow-primary-200 transition-all transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3">
+          <svg *ngIf="isLoading" class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          {{ isLoading ? 'Creating Account...' : 'Create Account' }}
+        </button>
+
+        <p class="text-center text-sm text-gray-500">
+          Already have an account?
+          <a routerLink="/auth/login" class="font-bold text-primary-600 hover:text-primary-700 transition">
+            Login here
+          </a>
         </p>
-      </div>
-
-      <!-- Last Name -->
-      <div>
-        <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">
-          Last Name <span class="text-red-500">*</span>
-        </label>
-        <input
-          type="text"
-          id="lastName"
-          formControlName="lastName"
-          placeholder="Enter your last name"
-          [class]="f['lastName'].touched && f['lastName'].invalid ? 'input-field input-error' : 'input-field'"
-        />
-        <p *ngIf="f['lastName'].touched && f['lastName'].errors" class="mt-1 text-sm text-red-600">
-          <span *ngIf="f['lastName'].errors['required']">Last name is required</span>
-          <span *ngIf="f['lastName'].errors['minlength']">Minimum 2 characters required</span>
-        </p>
-      </div>
-
-      <!-- Email -->
-      <div>
-        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-          Email <span class="text-red-500">*</span>
-        </label>
-        <input
-          type="email"
-          id="email"
-          formControlName="email"
-          placeholder="Enter your email"
-          [class]="f['email'].touched && f['email'].invalid ? 'input-field input-error' : 'input-field'"
-        />
-        <p *ngIf="f['email'].touched && f['email'].errors" class="mt-1 text-sm text-red-600">
-          <span *ngIf="f['email'].errors['required']">Email is required</span>
-          <span *ngIf="f['email'].errors['email']">Invalid email format</span>
-        </p>
-      </div>
-
-      <!-- Password -->
-      <div>
-        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
-          Password <span class="text-red-500">*</span>
-        </label>
-        <input
-          type="password"
-          id="password"
-          formControlName="password"
-          placeholder="Enter your password"
-          [class]="f['password'].touched && f['password'].invalid ? 'input-field input-error' : 'input-field'"
-        />
-        <p *ngIf="f['password'].touched && f['password'].errors" class="mt-1 text-sm text-red-600">
-          <span *ngIf="f['password'].errors['required']">Password is required</span>
-          <span *ngIf="f['password'].errors['minlength']">Minimum 6 characters required</span>
-        </p>
-      </div>
-
-      <!-- Confirm Password -->
-      <div>
-        <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-2">
-          Confirm Password <span class="text-red-500">*</span>
-        </label>
-        <input
-          type="password"
-          id="confirmPassword"
-          formControlName="confirmPassword"
-          placeholder="Confirm your password"
-          [class]="f['confirmPassword'].touched && f['confirmPassword'].errors ? 'input-field input-error' : 'input-field'"
-        />
-        <p *ngIf="f['confirmPassword'].touched && f['confirmPassword'].errors" class="mt-1 text-sm text-red-600">
-          <span *ngIf="f['confirmPassword'].errors['required']">Please confirm your password</span>
-          <span *ngIf="f['confirmPassword'].errors['passwordMismatch']">Passwords do not match</span>
-        </p>
-      </div>
-
-      <!-- Submit Button -->
-      <button
-        type="submit"
-        class="w-full btn-primary flex items-center justify-center gap-2"
-        [disabled]="isLoading"
-      >
-        <svg *ngIf="isLoading" class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        <span>{{ isLoading ? 'Creating Account...' : 'Create Account' }}</span>
-      </button>
-
-      <!-- Login Link -->
-      <p class="text-center text-sm text-gray-600">
-        Already have an account?
-        <a routerLink="/auth/login" class="font-medium text-primary-600 hover:text-primary-500 transition">
-          Login here
-        </a>
-      </p>
-    </form>
+      </form>
+    </div>
   </div>
 </div>

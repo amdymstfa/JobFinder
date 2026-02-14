@@ -11,3 +11,57 @@
 .fixed {
   animation: fadeIn 0.2s ease-out;
 }
+
+
+/* Custom Input Styling */
+.input-field {
+  @apply w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50
+  focus:bg-white focus:ring-4 focus:ring-primary-100 focus:border-primary-500
+  transition-all duration-200 outline-none text-gray-800 placeholder:text-gray-400;
+}
+
+.input-error {
+  @apply border-red-300 bg-red-50 focus:ring-red-100 focus:border-red-500;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes modalEnter {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.card-entrance {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.animate-modalEnter {
+  animation: modalEnter 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-in;
+}
+
+.fixed {
+  animation: fadeIn 0.2s ease-out;
+}

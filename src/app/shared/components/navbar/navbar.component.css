@@ -1,20 +1,24 @@
-/* Smooth transitions */
-.transition {
-  transition: all 0.3s ease;
+/* Liens Navigation Desktop */
+.nav-link {
+  @apply px-4 py-2 rounded-xl text-sm font-bold text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-300;
 }
 
-/* Mobile menu animation */
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* État actif des liens */
+.nav-active {
+  @apply text-white bg-white/10 shadow-inner;
 }
 
-.md\:hidden > div {
-  animation: slideDown 0.2s ease-out;
+/* Liens Navigation Mobile */
+.mobile-nav-link {
+  @apply block px-4 py-4 rounded-2xl text-base font-bold text-white hover:bg-white/5 transition-colors;
+}
+
+/* Animation d'entrée du menu mobile */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out forwards;
 }

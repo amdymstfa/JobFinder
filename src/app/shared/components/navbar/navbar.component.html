@@ -1,87 +1,92 @@
-<nav class="bg-white shadow-lg sticky top-0 z-50">
+<nav class="sticky top-0 z-[100] bg-slate-900/80 backdrop-blur-xl border-b border-white/5 shadow-2xl shadow-slate-900/50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between h-16">
-      <!-- Logo & Brand -->
+    <div class="flex justify-between h-20">
+
       <div class="flex items-center">
-        <a routerLink="/jobs" class="flex items-center">
-          <svg class="w-8 h-8 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
-            <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
-          </svg>
-          <span class="ml-2 text-2xl font-bold text-gradient">JobFinder</span>
+        <a routerLink="/jobs" class="flex items-center group">
+          <div class="relative">
+            <div class="absolute inset-0 bg-primary-500 blur-lg opacity-20 group-hover:opacity-40 transition-opacity"></div>
+            <svg class="relative w-9 h-9 text-primary-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+              <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
+            </svg>
+          </div>
+          <span class="ml-3 text-2xl font-black tracking-tighter text-white">
+            Job<span class="text-primary-400">Finder</span>
+          </span>
         </a>
       </div>
 
-      <!-- Desktop Navigation -->
-      <div class="hidden md:flex items-center space-x-4">
-        <a routerLink="/jobs" routerLinkActive="text-primary-600" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100 transition">
+      <div class="hidden md:flex items-center space-x-2">
+        <a routerLink="/jobs" routerLinkActive="nav-active" class="nav-link">
           Jobs
         </a>
 
         <ng-container *ngIf="isAuthenticated">
-          <a routerLink="/favorites" routerLinkActive="text-primary-600" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100 transition">
+          <a routerLink="/favorites" routerLinkActive="nav-active" class="nav-link">
             Favorites
           </a>
-          <a routerLink="/applications" routerLinkActive="text-primary-600" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100 transition">
+          <a routerLink="/applications" routerLinkActive="nav-active" class="nav-link">
             Applications
           </a>
-          <a routerLink="/profile" routerLinkActive="text-primary-600" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100 transition">
+          <a routerLink="/profile" routerLinkActive="nav-active" class="nav-link">
             Profile
           </a>
-          <button (click)="logout()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+
+          <div class="h-6 w-px bg-white/10 mx-2"></div>
+
+          <button (click)="logout()" class="ml-2 px-4 py-2 text-xs font-black uppercase tracking-widest text-red-400 hover:bg-red-500/10 rounded-xl transition-all">
             Logout
           </button>
         </ng-container>
 
         <ng-container *ngIf="!isAuthenticated">
-          <a routerLink="/auth/login" class="px-4 py-2 text-primary-600 font-medium hover:text-primary-700 transition">
+          <a routerLink="/auth/login" class="px-5 py-2 text-sm font-bold text-white hover:text-primary-400 transition-colors">
             Login
           </a>
-          <a routerLink="/auth/register" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition">
+          <a routerLink="/auth/register" class="px-6 py-2.5 bg-primary-500 hover:bg-primary-600 text-slate-900 rounded-xl text-sm font-black uppercase tracking-widest transition-all shadow-lg shadow-primary-500/25">
             Register
           </a>
         </ng-container>
       </div>
 
-      <!-- Mobile menu button -->
       <div class="md:hidden flex items-center">
-        <button (click)="toggleMobileMenu()" class="text-gray-700 hover:text-primary-600 focus:outline-none">
+        <button (click)="toggleMobileMenu()" class="p-2 rounded-xl bg-white/5 text-white focus:outline-none transition-transform active:scale-90">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path *ngIf="!isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            <path *ngIf="isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            <path *ngIf="!isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/>
+            <path *ngIf="isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Mobile Menu -->
-  <div *ngIf="isMobileMenuOpen" class="md:hidden bg-white border-t border-gray-200">
-    <div class="px-2 pt-2 pb-3 space-y-1">
-      <a routerLink="/jobs" (click)="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100">
+  <div *ngIf="isMobileMenuOpen" class="md:hidden bg-slate-900 border-t border-white/5 animate-slideIn">
+    <div class="px-4 pt-4 pb-8 space-y-2">
+      <a routerLink="/jobs" (click)="toggleMobileMenu()" class="mobile-nav-link">
         Jobs
       </a>
 
       <ng-container *ngIf="isAuthenticated">
-        <a routerLink="/favorites" (click)="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100">
+        <a routerLink="/favorites" (click)="toggleMobileMenu()" class="mobile-nav-link">
           Favorites
         </a>
-        <a routerLink="/applications" (click)="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100">
+        <a routerLink="/applications" (click)="toggleMobileMenu()" class="mobile-nav-link">
           Applications
         </a>
-        <a routerLink="/profile" (click)="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-100">
+        <a routerLink="/profile" (click)="toggleMobileMenu()" class="mobile-nav-link">
           Profile
         </a>
-        <button (click)="logout()" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-50">
+        <button (click)="logout()" class="w-full text-left px-4 py-4 rounded-2xl text-base font-bold text-red-400 bg-red-400/5 mt-4">
           Logout
         </button>
       </ng-container>
 
       <ng-container *ngIf="!isAuthenticated">
-        <a routerLink="/auth/login" (click)="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-primary-600 hover:bg-gray-100">
+        <a routerLink="/auth/login" (click)="toggleMobileMenu()" class="mobile-nav-link text-primary-400">
           Login
         </a>
-        <a routerLink="/auth/register" (click)="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium bg-primary-600 text-white hover:bg-primary-700">
+        <a routerLink="/auth/register" (click)="toggleMobileMenu()" class="block w-full px-4 py-4 rounded-2xl bg-primary-500 text-slate-900 text-center font-black uppercase tracking-widest">
           Register
         </a>
       </ng-container>

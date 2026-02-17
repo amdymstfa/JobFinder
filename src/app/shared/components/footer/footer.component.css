@@ -1,4 +1,28 @@
-/* Footer styles */
+/* Container margin management */
 footer {
   margin-top: auto;
+}
+
+/* Section Title Styling */
+.footer-heading {
+  @apply text-xs font-black uppercase tracking-[0.2em] text-white mb-6;
+}
+
+/* Link Styling with Hover Animation */
+.footer-link {
+  @apply text-slate-400 text-sm font-bold hover:text-primary-400 transition-all duration-300 flex items-center gap-0 hover:gap-2;
+}
+
+.footer-link::before {
+  content: '→';
+  @apply opacity-0 w-0 transition-all duration-300 text-primary-400;
+}
+
+.footer-link:hover::before {
+  @apply opacity-100 w-4;
+}
+
+/* Social Icon Round Background */
+.social-icon-wrapper {
+  @apply w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-slate-400 hover:bg-primary-500 hover:text-slate-900 transition-all duration-500 shadow-lg hover:shadow-primary-500/20;
 }

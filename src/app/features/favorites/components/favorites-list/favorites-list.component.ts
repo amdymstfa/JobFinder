@@ -8,6 +8,7 @@ import { LoaderComponent } from '../../../../shared/components/loader/loader.com
 import * as FavoritesActions from '../../store/favorites.actions';
 import * as FavoritesSelectors from '../../store/favorites.selectors';
 import {RouterLink} from "@angular/router";
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-favorites-list',
@@ -19,6 +20,7 @@ import {RouterLink} from "@angular/router";
 export class FavoritesListComponent implements OnInit {
   private store = inject(Store);
   private authService = inject(AuthService);
+  private route = inject(ActivatedRoute);
 
   favorites$: Observable<Favorite[]>;
   loading$: Observable<boolean>;
@@ -31,6 +33,8 @@ export class FavoritesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const resolvedFavorites = this.route.snapshot.data['favorites'];
+    console.log('Favorites pre-loaded by resolver:', resolvedFavorites);
     const currentUser = this.authService.getCurrentUser();
     if (currentUser?.id) {
       this.store.dispatch(FavoritesActions.loadFavorites({ userId: currentUser.id }));

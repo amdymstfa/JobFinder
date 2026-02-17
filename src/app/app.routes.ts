@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { favoritesResolver } from './core/guards/favorites.resolver'; // ← AJOUTER
 
 export const routes: Routes = [
   {
@@ -25,20 +26,21 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/components/profile/profile.component').then(m => m.ProfileComponent),
     canActivate: [authGuard]
   },
-  // {
-  //   path: 'jobs',
-  //   loadComponent: () => import('./features/jobs/components/job-search/job-search.component').then(m => m.JobSearchComponent)
-  // },
-  // {
-  //   path: 'favorites',
-  //   loadComponent: () => import('./features/favorites/components/favorites-list/favorites-list.component').then(m => m.FavoritesListComponent),
-  //   canActivate: [authGuard]
-  // },
-  // {
-  //   path: 'applications',
-  //   loadComponent: () => import('./features/applications/components/applications-list/applications-list.component').then(m => m.ApplicationsListComponent),
-  //   canActivate: [authGuard]
-  // },
+  {
+    path: 'jobs',
+    loadComponent: () => import('./features/jobs/components/job-search/job-search.component').then(m => m.JobSearchComponent)
+  },
+  {
+    path: 'favorites',
+    loadComponent: () => import('./features/favorites/components/favorites-list/favorites-list.component').then(m => m.FavoritesListComponent),
+    canActivate: [authGuard],
+    resolve: { favorites: favoritesResolver }
+  },
+  {
+    path: 'applications',
+    loadComponent: () => import('./features/applications/components/applications-list/applications-list.component').then(m => m.ApplicationsListComponent),
+    canActivate: [authGuard]
+  },
   {
     path: '**',
     redirectTo: '/jobs'

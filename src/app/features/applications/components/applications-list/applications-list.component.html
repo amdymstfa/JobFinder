@@ -1,0 +1,99 @@
+<div class="min-h-screen bg-gray-50/50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
+      <div class="animate-fadeInLeft">
+        <h1 class="text-4xl font-black text-gray-900 tracking-tight">My Applications</h1>
+        <p class="text-gray-500 mt-1">Manage your journey and track your professional progress.</p>
+      </div>
+
+      <div class="flex gap-4 bg-white p-2 rounded-2xl shadow-sm border border-gray-100">
+        <div class="px-4 py-2 text-center border-r border-gray-100">
+          <span class="block text-xl font-black text-primary-600">{{ applications.length }}</span>
+          <span class="text-[10px] uppercase font-bold text-gray-400">Total</span>
+        </div>
+        <div class="px-4 py-2 text-center">
+          <span class="block text-xl font-black text-green-600">{{ getCountByStatus(ApplicationStatus.ACCEPTED) }}</span>
+          <span class="text-[10px] uppercase font-bold text-gray-400">Accepted</span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="error" class="mb-8 animate-shake bg-red-50 border border-red-100 text-red-700 px-6 py-4 rounded-2xl flex justify-between items-center shadow-sm">
+      <div class="flex items-center gap-3">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+        <span class="font-medium">{{ error }}</span>
+      </div>
+      <button (click)="error = null" class="hover:bg-red-100 p-1 rounded-full transition-colors">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"/></svg>
+      </button>
+    </div>
+
+    <div class="mb-10 flex flex-wrap items-center gap-3 p-1.5 bg-gray-100/50 rounded-2xl w-fit">
+      <button (click)="filterByStatus('all')"
+              [class]="selectedFilter === 'all' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'"
+              class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 flex items-center gap-2">
+        All
+        <span class="bg-gray-200 px-2 py-0.5 rounded-md text-[10px]">{{ getCountByStatus('all') }}</span>
+      </button>
+
+      <button (click)="filterByStatus(ApplicationStatus.PENDING)"
+              [class]="selectedFilter === ApplicationStatus.PENDING ? 'bg-amber-500 text-white shadow-lg shadow-amber-200' : 'text-gray-500 hover:text-amber-600'"
+              class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 flex items-center gap-2">
+        Pending
+        <span [class]="selectedFilter === ApplicationStatus.PENDING ? 'bg-amber-400' : 'bg-gray-200'" class="px-2 py-0.5 rounded-md text-[10px]">{{ getCountByStatus(ApplicationStatus.PENDING) }}</span>
+      </button>
+
+      <button (click)="filterByStatus(ApplicationStatus.ACCEPTED)"
+              [class]="selectedFilter === ApplicationStatus.ACCEPTED ? 'bg-green-600 text-white shadow-lg shadow-green-200' : 'text-gray-500 hover:text-green-600'"
+              class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 flex items-center gap-2">
+        Accepted
+        <span [class]="selectedFilter === ApplicationStatus.ACCEPTED ? 'bg-green-500' : 'bg-gray-200'" class="px-2 py-0.5 rounded-md text-[10px]">{{ getCountByStatus(ApplicationStatus.ACCEPTED) }}</span>
+      </button>
+
+      <button (click)="filterByStatus(ApplicationStatus.REJECTED)"
+              [class]="selectedFilter === ApplicationStatus.REJECTED ? 'bg-red-600 text-white shadow-lg shadow-red-200' : 'text-gray-500 hover:text-red-600'"
+              class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 flex items-center gap-2">
+        Rejected
+        <span [class]="selectedFilter === ApplicationStatus.REJECTED ? 'bg-red-500' : 'bg-gray-200'" class="px-2 py-0.5 rounded-md text-[10px]">{{ getCountByStatus(ApplicationStatus.REJECTED) }}</span>
+      </button>
+    </div>
+
+    <div class="relative min-h-[400px]">
+      <div *ngIf="loading" class="py-20">
+        <app-loader message="Synchronizing your applications..."></app-loader>
+      </div>
+
+      <div *ngIf="!loading && filteredApplications.length === 0"
+           class="bg-white rounded-3xl border border-gray-100 py-24 px-6 text-center shadow-sm animate-fadeIn">
+        <div class="w-24 h-24 bg-gray-50 text-gray-300 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+        <h3 class="text-2xl font-black text-gray-900 mb-2">
+          {{ selectedFilter === 'all' ? 'Your journey starts here' : 'No ' + selectedFilter + ' results' }}
+        </h3>
+        <p class="text-gray-500 mb-8 max-w-sm mx-auto">
+          {{ selectedFilter === 'all'
+          ? 'Track your progress and don\'t miss any opportunities.'
+          : 'Try looking into other categories to see your applications.' }}
+        </p>
+        <a *ngIf="selectedFilter === 'all'" routerLink="/jobs" class="px-8 py-3 bg-primary-600 text-white rounded-xl font-bold shadow-lg shadow-primary-200 hover:bg-primary-700 transition-all transform hover:-translate-y-1">
+          Explore Jobs
+        </a>
+      </div>
+
+      <div *ngIf="!loading && filteredApplications.length > 0"
+           class="grid grid-cols-1 lg:grid-cols-2 gap-8 app-grid">
+        <app-application-card
+          *ngFor="let application of filteredApplications; let i = index"
+          [application]="application"
+          (updateStatus)="onUpdateStatus($event)"
+          (updateNotes)="onUpdateNotes($event)"
+          (deleteApplication)="onDeleteApplication($event)"
+          class="app-card-item"
+          [style.animation-delay]="(i * 0.08) + 's'"
+        ></app-application-card>
+      </div>
+    </div>
+  </div>
+</div>

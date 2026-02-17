@@ -1,45 +1,51 @@
-/* Custom Input Styling */
-.input-field {
-  @apply w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50
-  focus:bg-white focus:ring-4 focus:ring-primary-100 focus:border-primary-500
-  transition-all duration-200 outline-none text-gray-800 placeholder:text-gray-400;
+/* Base Input Styling */
+.auth-input {
+  @apply w-full py-5 px-6 rounded-2xl bg-gray-50 border border-gray-100
+  text-gray-900 font-bold outline-none
+  focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10
+  transition-all duration-300;
+}
+
+/* Floating Label Logic */
+.floating-label {
+  @apply absolute left-6 top-5 text-gray-400 font-bold pointer-events-none
+  transition-all duration-300 flex items-center;
+}
+
+/* Move label when focused or content exists */
+.peer:focus ~ .floating-label,
+.peer:not(:placeholder-shown) ~ .floating-label {
+  @apply -top-3 left-4 text-[10px] bg-white px-2 text-primary-600 font-black uppercase tracking-widest opacity-100;
+}
+
+.error-text {
+  @apply text-[10px] font-bold text-red-500 mt-2 ml-1 uppercase tracking-tighter;
 }
 
 .input-error {
-  @apply border-red-300 bg-red-50 focus:ring-red-100 focus:border-red-500;
+  @apply border-red-200 bg-red-50 focus:border-red-500 focus:ring-red-500/10;
 }
 
 /* Animations */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  75% { transform: translateX(4px); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.card {
-  animation: slideIn 0.5s ease-out forwards;
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
 }
 
 .animate-shake {
-  animation: shake 0.4s ease-in-out;
+  animation: shake 0.3s ease-in-out;
 }
 
 .animate-fadeIn {
-  animation: fadeIn 0.2s ease-in forwards;
+  @apply transition-opacity duration-300;
 }

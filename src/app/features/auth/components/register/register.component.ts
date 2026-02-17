@@ -1,8 +1,8 @@
-import {Component} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Router, RouterModule} from "@angular/router";
-import {AuthService} from "../../../../core/services/auth.service";
+import { Component, inject, OnInit } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { Router, RouterModule } from "@angular/router";
+import { AuthService } from "../../../../core/services/auth.service";
 
 @Component({
   selector: 'app-register',
@@ -11,26 +11,31 @@ import {AuthService} from "../../../../core/services/auth.service";
   templateUrl: 'register.component.html',
   styleUrl: 'register.component.css'
 })
+export class RegisterComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-export class RegisterComponent {
-
-  registerForm: FormGroup ;
+  registerForm: FormGroup;
   errorMessage: string = '';
   successMessage: string = '';
-  isLoading: boolean = false ;
+  isLoading: boolean = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router : Router
-  ) {
+  constructor() {
     this.registerForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
-      lastName : ['', [Validators.required, Validators.minLength(2)]],
+      lastName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required] ]
-    }, {Validators: this.passwordMatchValidator});
+      confirmPassword: ['', [Validators.required]]
+    }, { validators: this.passwordMatchValidator });
+  }
+
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      console.log('User already logged in, logging out before registration');
+      this.authService.logout();
+    }
   }
 
   passwordMatchValidator(form: FormGroup) {
@@ -44,9 +49,9 @@ export class RegisterComponent {
     return null;
   }
 
-  onSubmit(): void{
+  onSubmit(): void {
     // Invalid formular case
-    if (this.registerForm.invalid){
+    if (this.registerForm.invalid) {
       this.markFormGroupTouched(this.registerForm);
       return;
     }
@@ -54,20 +59,23 @@ export class RegisterComponent {
     // Initialization before submit
     this.errorMessage = '';
     this.successMessage = '';
-    this.isLoading = true ;
-
+    this.isLoading = true;
 
     // Handle subscription
     this.authService.register(this.registerForm.value).subscribe({
       next: (response) => {
-        this.isLoading = false ;
-        this.successMessage = 'Register Successful';
+
+        console.log('Registration successful:', response.user);
+
+        this.isLoading = false;
+        this.successMessage = 'Registration successful! Redirecting...';
 
         setTimeout(() => {
-          this.router.navigate(['/jobs']);
+          this.router.navigate(['/auth/login']);
         }, 1500);
       },
       error: (error) => {
+        console.error('Registration error:', error);
         this.isLoading = false;
         this.errorMessage = error.message || 'Registration failed. Please try again.';
       }
@@ -77,8 +85,8 @@ export class RegisterComponent {
   private markFormGroupTouched(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach(key => {
       const control = formGroup.get(key);
-      control?.markAsTouched() ;
-    })
+      control?.markAsTouched();
+    });
   }
 
   get f() {

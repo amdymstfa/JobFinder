@@ -1,0 +1,33 @@
+/* Container Grid */
+.job-grid {
+  perspective: 1000px;
+}
+
+/* Individual Card Wrapper */
+.job-card-wrapper {
+  @apply opacity-0;
+  animation: slideUpFade 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Animations */
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Staggered animation delay handling via HTML attribute [style.animation-delay] */

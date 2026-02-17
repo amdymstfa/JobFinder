@@ -1,0 +1,30 @@
+/* Styling des inputs de recherche */
+.search-input {
+  @apply w-full pl-14 pr-6 py-5 rounded-[1.25rem] bg-gray-50 border-2 border-transparent
+  text-gray-900 font-bold placeholder:text-gray-400 placeholder:font-medium
+  focus:bg-white focus:border-primary-500 focus:ring-0
+  transition-all duration-300;
+}
+
+.input-error {
+  @apply border-red-200 bg-red-50 focus:border-red-500;
+}
+
+/* Animations de toast et d'entrée */
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
+}

@@ -11,14 +11,14 @@ export class JobService {
   private http = inject(HttpClient);
 
   /**
-   * Search for jobs using API
-
+   * Search jobs via Adzuna API
+   * The API already uses relevance ranking that prioritizes title matches.
+   * We return results as-is to provide better user experience.
    */
   searchJobs(searchParams: JobSearchParams): Observable<JobSearchResponse> {
     const { keywords, location, page = 1, results_per_page = 10 } = searchParams;
 
-    //  API endpoint structure: /v1/api/jobs/{country}/search/{page}
-    const country = 'uk';
+    const country = 'us';
     const url = `${environment.jobApiUrl}/${country}/search/${page}`;
 
     let params = new HttpParams()
@@ -29,7 +29,9 @@ export class JobService {
       .set('where', location)
       .set('sort_by', 'date');
 
+    console.log('🌐 Full URL:', url);
+    console.log('📋 Params:', params.toString());
+
     return this.http.get<JobSearchResponse>(url, { params });
   }
-  
 }

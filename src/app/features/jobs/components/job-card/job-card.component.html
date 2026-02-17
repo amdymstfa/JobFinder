@@ -1,0 +1,77 @@
+<div class="job-card group relative bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:border-primary-100 transition-all duration-300 flex flex-col h-full">
+
+  <div class="flex justify-between items-start mb-4">
+    <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400 bg-gray-50 px-2 py-1 rounded-md">
+      Posted {{ getTimeAgo(job.created) }}
+    </span>
+
+    <div class="flex gap-2" *ngIf="isAuthenticated">
+      <button (click)="onAddToFavorites(); $event.stopPropagation()"
+              [disabled]="isFavorite"
+              [class]="isFavorite ? 'text-red-500 bg-red-50' : 'text-gray-400 bg-gray-50 hover:text-red-500 hover:bg-red-50'"
+              class="p-2 rounded-xl transition-colors duration-200">
+        <svg class="w-5 h-5" [attr.fill]="isFavorite ? 'currentColor' : 'none'" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <h3 class="text-xl font-extrabold text-gray-900 group-hover:text-primary-600 transition-colors line-clamp-2 leading-tight mb-2">
+      {{ job.title }}
+    </h3>
+    <div class="flex flex-wrap gap-2 items-center">
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary-50 text-primary-700">
+        {{ job.company.display_name }}
+      </span>
+      <span *ngIf="job.contract_type" [class]="'badge-base ' + getContractTypeBadge()">
+        {{ job.contract_type | titlecase }}
+      </span>
+    </div>
+  </div>
+
+  <div class="space-y-3 mb-6 flex-grow">
+    <div class="flex items-center text-gray-500 text-sm">
+      <div class="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center mr-3 text-primary-500">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      </div>
+      <span class="truncate">{{ job.location.display_name }}</span>
+    </div>
+
+    <div class="flex items-center text-gray-500 text-sm">
+      <div class="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center mr-3 text-green-500">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <span>{{ job.salary_min | salary:job.salary_max }}</span>
+    </div>
+
+    <p class="text-gray-500 text-sm line-clamp-3 italic leading-relaxed pt-2">
+      "{{ job.description }}"
+    </p>
+  </div>
+
+  <div class="mt-auto pt-6 border-t border-gray-50 flex flex-col gap-3">
+    <div class="flex gap-2">
+      <button (click)="openJob()"
+              class="flex-[3] bg-gray-900 text-white py-3 rounded-xl font-bold text-sm hover:bg-primary-600 transition-all transform active:scale-95 flex items-center justify-center gap-2">
+        <span>Apply Now</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+      </button>
+
+      <button *ngIf="isAuthenticated"
+              (click)="onTrackApplication()"
+              [disabled]="isTracked"
+              [class]="isTracked ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-600 hover:bg-green-600 hover:text-white'"
+              class="flex-1 py-3 rounded-xl transition-all flex items-center justify-center relative group/track">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+        <span *ngIf="isTracked" class="absolute -top-8 bg-gray-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover/track:opacity-100 transition-opacity whitespace-nowrap">Already tracked</span>
+      </button>
+    </div>
+
+    <div *ngIf="isTracked || isFavorite" class="flex flex-wrap gap-2">
+      <span *ngIf="isTracked" class="text-[10px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded uppercase tracking-tighter">Applied</span>
+      <span *ngIf="isFavorite" class="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded uppercase tracking-tighter">Saved</span>
+    </div>
+  </div>
+</div>
